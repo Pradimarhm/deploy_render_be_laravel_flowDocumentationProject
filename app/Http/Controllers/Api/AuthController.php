@@ -16,7 +16,8 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\PasswordResetToken;
 use App\Mail\SendOtpMail;
-use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -63,8 +64,8 @@ class AuthController extends Controller
         return $this->success(new UserResource(JWTAuth::user()), 'Profile berhasil diambil');
     }
 
-        //ubah Password
-        public function changePassword(ChangePasswordRequest $request)
+    //ubah Password
+    public function changePassword(ChangePasswordRequest $request)
     {
         $user = JWTAuth::user();
 
@@ -84,85 +85,107 @@ class AuthController extends Controller
         ]);
     }
 
-     // ===============================
+    // ===============================
     // FITUR LUPA PASSWORD
     // ===============================
 
-            public function forgotPassword(ForgotPasswordRequest $request)
-        {
-            // Cek apakah email terdaftar
-            $user = User::where('email', $request->email)->first();
+    public function forgotPassword(ForgotPasswordRequest $request)
+    {
+        // Cek apakah email terdaftar
+        $user = User::where('email', $request->email)->first();
 
-            if (!$user) {
-                return response()->json([
-                    'message' => 'Email tidak ditemukan.'
-                ], 404);
-            }
-
-            // Generate OTP 6 digit
-            $otp = random_int(100000, 999999);
-
-            // Hapus OTP lama jika ada
-            PasswordResetToken::where('email', $request->email)->delete();
-
-            // Simpan OTP baru (DI-HASH)
-            PasswordResetToken::create([
-                'email' => $request->email,
-                'otp' => Hash::make($otp),
-                'expired_at' => now()->addMinutes(5),
-            ]);
-
-            // Kirim OTP ke email
-            Mail::to($request->email)->send(new SendOtpMail($otp));
-
+        if (!$user) {
             return response()->json([
-                'message' => 'Kode OTP berhasil dikirim ke email.'
-            ]);
+                'message' => 'Email tidak ditemukan.'
+            ], 404);
         }
 
-           public function resetPassword(ResetPasswordRequest $request)
-            {
-                // Cari OTP berdasarkan email
-                $resetToken = PasswordResetToken::where('email', $request->email)->first();
+        // Generate OTP 6 digit
+        $otp = random_int(100000, 999999);
 
-                if (!$resetToken) {
-                    return response()->json([
-                        'message' => 'OTP tidak valid.'
-                    ], 400);
-                }
+        // Hapus OTP lama jika ada
+        PasswordResetToken::where('email', $request->email)->delete();
 
-                // Cek OTP yang di-hash
-                if (!Hash::check($request->otp, $resetToken->otp)) {
-                    return response()->json([
-                        'message' => 'OTP tidak valid.'
-                    ], 400);
-                }
+        // Simpan OTP baru (DI-HASH)
+        PasswordResetToken::create([
+            'email' => $request->email,
+            'otp' => Hash::make($otp),
+            'expired_at' => now()->addMinutes(5),
+        ]);
 
-                // Cek masa berlaku OTP
-                if ($resetToken->expired_at->isPast()) {
-                    return response()->json([
-                        'message' => 'OTP sudah kadaluarsa.'
-                    ], 400);
-                }
+        // Kirim OTP ke email lewat Brevo API
+        $htmlContent = (new SendOtpMail($otp))->render();
 
-                // Cari user
-                $user = User::where('email', $request->email)->first();
+        $response = Http::withHeaders([
+            'accept'       => 'application/json',
+            'api-key'      => config('services.brevo.key'),
+            'content-type' => 'application/json',
+        ])->post('https://api.brevo.com/v3/smtp/email', [
+            'sender' => [
+                'name'  => config('mail.from.name'),
+                'email' => config('mail.from.address'),
+            ],
+            'to' => [
+                ['email' => $request->email],
+            ],
+            'subject'     => 'Kode OTP Reset Password',
+            'htmlContent' => $htmlContent,
+        ]);
 
-                if (!$user) {
-                    return response()->json([
-                        'message' => 'User tidak ditemukan.'
-                    ], 404);
-                }
+        if ($response->failed()) {
+            return response()->json([
+                'message' => 'Gagal mengirim OTP, coba lagi nanti.'
+            ], 500);
+        }
 
-                // Update password
-                $user->password = Hash::make($request->password);
-                $user->save();
+        return response()->json([
+            'message' => 'Kode OTP berhasil dikirim ke email.'
+        ]);
+    }
 
-                // Hapus OTP agar tidak bisa dipakai lagi
-                $resetToken->delete();
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        // Cari OTP berdasarkan email
+        $resetToken = PasswordResetToken::where('email', $request->email)->first();
 
-                return response()->json([
-                    'message' => 'Password berhasil direset.'
-                ]);
-            }
+        if (!$resetToken) {
+            return response()->json([
+                'message' => 'OTP tidak valid.'
+            ], 400);
+        }
+
+        // Cek OTP yang di-hash
+        if (!Hash::check($request->otp, $resetToken->otp)) {
+            return response()->json([
+                'message' => 'OTP tidak valid.'
+            ], 400);
+        }
+
+        // Cek masa berlaku OTP
+        if ($resetToken->expired_at->isPast()) {
+            return response()->json([
+                'message' => 'OTP sudah kadaluarsa.'
+            ], 400);
+        }
+
+        // Cari user
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User tidak ditemukan.'
+            ], 404);
+        }
+
+        // Update password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Hapus OTP agar tidak bisa dipakai lagi
+        $resetToken->delete();
+
+        return response()->json([
+            'message' => 'Password berhasil direset.'
+        ]);
+    }
 }
