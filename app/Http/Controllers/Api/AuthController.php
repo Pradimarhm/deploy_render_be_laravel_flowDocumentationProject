@@ -133,10 +133,21 @@ class AuthController extends Controller
         ]);
 
         if ($response->failed()) {
+            \Illuminate\Support\Facades\Log::error('Brevo API Error', [
+                'status' => $response->status(),
+                'body'   => $response->body(),
+            ]);
+
             return response()->json([
                 'message' => 'Gagal mengirim OTP, coba lagi nanti.'
             ], 500);
         }
+
+        // if ($response->failed()) {
+        //     return response()->json([
+        //         'message' => 'Gagal mengirim OTP, coba lagi nanti.'
+        //     ], 500);
+        // }
 
         return response()->json([
             'message' => 'Kode OTP berhasil dikirim ke email.'
