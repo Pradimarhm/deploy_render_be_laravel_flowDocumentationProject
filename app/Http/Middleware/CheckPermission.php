@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+
 use App\Models\User;
+
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,15 +14,19 @@ class CheckPermission
 {
     public function handle(Request $request, Closure $next, string $module, string $action): Response
     {
-        /** @var User|null $user */
+
+        /** @var \App\Models\User|null $user */
+
         $user = Auth::user();
 
-        if (!$user instanceof User || !$user->hasPermission($module, $action)) {
-            return response()->json([
-                'message' => "Tidak punya izin: {$module}.{$action}",
-            ], 403);
-        }
+        if (!$user || !$user->hasPermission($module, $action)) {
 
-        return $next($request);
+         return response()->json([
+            
+        'message' => "Tidak punya izin: {$module}.{$action}"
+         ], 403);
+}
+
+return $next($request);
     }
 }
