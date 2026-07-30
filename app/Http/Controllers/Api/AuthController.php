@@ -16,8 +16,9 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\PasswordResetToken;
 use App\Mail\SendOtpMail;
-// use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Http;
+
 
 class AuthController extends Controller
 {
@@ -64,8 +65,8 @@ class AuthController extends Controller
         return $this->success(new UserResource(JWTAuth::user()), 'Profile berhasil diambil');
     }
 
-    //ubah Password
-    public function changePassword(ChangePasswordRequest $request)
+        //ubah Password
+        public function changePassword(ChangePasswordRequest $request)
     {
         $user = JWTAuth::user();
 
@@ -85,11 +86,11 @@ class AuthController extends Controller
         ]);
     }
 
-    // ===============================
+     // ===============================
     // FITUR LUPA PASSWORD
     // ===============================
 
-    public function forgotPassword(ForgotPasswordRequest $request)
+            public function forgotPassword(ForgotPasswordRequest $request)
     {
         // Cek apakah email terdaftar
         $user = User::where('email', $request->email)->first();
@@ -154,49 +155,49 @@ class AuthController extends Controller
         ]);
     }
 
-    public function resetPassword(ResetPasswordRequest $request)
-    {
-        // Cari OTP berdasarkan email
-        $resetToken = PasswordResetToken::where('email', $request->email)->first();
+           public function resetPassword(ResetPasswordRequest $request)
+            {
+                // Cari OTP berdasarkan email
+                $resetToken = PasswordResetToken::where('email', $request->email)->first();
 
-        if (!$resetToken) {
-            return response()->json([
-                'message' => 'OTP tidak valid.'
-            ], 400);
-        }
+                if (!$resetToken) {
+                    return response()->json([
+                        'message' => 'OTP tidak valid.'
+                    ], 400);
+                }
 
-        // Cek OTP yang di-hash
-        if (!Hash::check($request->otp, $resetToken->otp)) {
-            return response()->json([
-                'message' => 'OTP tidak valid.'
-            ], 400);
-        }
+                // Cek OTP yang di-hash
+                if (!Hash::check($request->otp, $resetToken->otp)) {
+                    return response()->json([
+                        'message' => 'OTP tidak valid.'
+                    ], 400);
+                }
 
-        // Cek masa berlaku OTP
-        if ($resetToken->expired_at->isPast()) {
-            return response()->json([
-                'message' => 'OTP sudah kadaluarsa.'
-            ], 400);
-        }
+                // Cek masa berlaku OTP
+                if ($resetToken->expired_at->isPast()) {
+                    return response()->json([
+                        'message' => 'OTP sudah kadaluarsa.'
+                    ], 400);
+                }
 
-        // Cari user
-        $user = User::where('email', $request->email)->first();
+                // Cari user
+                $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'User tidak ditemukan.'
-            ], 404);
-        }
+                if (!$user) {
+                    return response()->json([
+                        'message' => 'User tidak ditemukan.'
+                    ], 404);
+                }
 
-        // Update password
-        $user->password = Hash::make($request->password);
-        $user->save();
+                // Update password
+                $user->password = Hash::make($request->password);
+                $user->save();
 
-        // Hapus OTP agar tidak bisa dipakai lagi
-        $resetToken->delete();
+                // Hapus OTP agar tidak bisa dipakai lagi
+                $resetToken->delete();
 
-        return response()->json([
-            'message' => 'Password berhasil direset.'
-        ]);
-    }
+                return response()->json([
+                    'message' => 'Password berhasil direset.'
+                ]);
+            }
 }
