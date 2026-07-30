@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flow extends Model
 {
-    // use HasUuids;
+    use HasUuids;
 
-    // protected $keyType = 'string';
-    // public $incrementing = false;
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
         'name',
