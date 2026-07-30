@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://fe-flow-documentation-website.onrender.com'],
+    'allowed_origins' => ['https://fe-flow-documentation-website.onrender.com', 'http://localhost:5173'],
 
     'allowed_origins_patterns' => [],
 
