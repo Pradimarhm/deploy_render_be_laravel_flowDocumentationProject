@@ -8,16 +8,16 @@
 </head>
 
 <body
-    style="margin:0; padding:0; background-color:#e8e8e8; font-family: Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+    style="margin:0; padding:0; background-color:#ffffff; font-family: Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
-        style="background-color:#e8e8e8; padding: 40px 15px;">
+        style="background-color:#ffffff; padding: 40px 15px;">
         <tr>
             <td align="center">
 
                 <!-- CONTAINER UTAMA NEO-BRUTALISM -->
                 <table role="presentation" width="520" cellpadding="0" cellspacing="0"
-                    style="background-color:#f0f0f0; border: 3px solid #323232; border-radius: 10px; box-shadow: 8px 8px 0px #323232; overflow: hidden; width: 100%; max-width: 520px;">
+                    style="background-color:#ffffff; border: 3px solid #323232; border-radius: 10px; box-shadow: 8px 8px 0px #323232; overflow: hidden; width: 100%; max-width: 520px;">
 
                     <!-- HEADER -->
                     <tr>
@@ -29,7 +29,7 @@
                                 style="display: inline-block; background-color: #ffffff; border: 3px solid #323232; border-radius: 10px; box-shadow: 4px 4px 0px #323232; padding: 12px 18px; margin-bottom: 15px;">
                                 <span
                                     style="font-size: 24px; font-weight: 900; color: #323232; text-transform: uppercase; letter-spacing: 1px;">
-                                    🔐 FLOWDOC
+                                    FLOW TECH
                                 </span>
                             </div>
 
