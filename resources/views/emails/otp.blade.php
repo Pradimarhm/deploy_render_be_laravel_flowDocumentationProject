@@ -7,231 +7,127 @@
     <title>Kode OTP Reset Password</title>
 </head>
 
-<body style="margin:0;padding:0;background:#eef2f7;font-family:Segoe UI,Arial,sans-serif;">
+<body
+    style="margin:0; padding:0; background-color:#e8e8e8; font-family: Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef2f7;padding:40px 15px;">
-<tr>
-<td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+        style="background-color:#e8e8e8; padding: 40px 15px;">
+        <tr>
+            <td align="center">
 
-<table role="presentation" width="620" cellpadding="0" cellspacing="0"
-style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 10px 35px rgba(0,0,0,.08);">
+                <!-- CONTAINER UTAMA NEO-BRUTALISM -->
+                <table role="presentation" width="520" cellpadding="0" cellspacing="0"
+                    style="background-color:#f0f0f0; border: 3px solid #323232; border-radius: 10px; box-shadow: 8px 8px 0px #323232; overflow: hidden; width: 100%; max-width: 520px;">
 
-<!-- HEADER -->
-<tr>
-<td style="
-background:linear-gradient(135deg,#2563eb,#1d4ed8);
-padding:45px 35px;
-text-align:center;
-color:#ffffff;
-">
+                    <!-- HEADER -->
+                    <tr>
+                        <td
+                            style="background-color:#ffffff; border-bottom: 3px solid #323232; padding: 30px; text-align: center;">
 
-<div style="
-width:72px;
-height:72px;
-margin:auto;
-background:rgba(255,255,255,.18);
-border-radius:50%;
-line-height:72px;
-font-size:34px;">
-🔐
-</div>
+                            <!-- BADGE LOGO UTAMA -->
+                            <div
+                                style="display: inline-block; background-color: #ffffff; border: 3px solid #323232; border-radius: 10px; box-shadow: 4px 4px 0px #323232; padding: 12px 18px; margin-bottom: 15px;">
+                                <span
+                                    style="font-size: 24px; font-weight: 900; color: #323232; text-transform: uppercase; letter-spacing: 1px;">
+                                    🔐 FLOWDOC
+                                </span>
+                            </div>
 
-<h1 style="margin:20px 0 5px;font-size:30px;font-weight:700;">
-Intern Boscod
-</h1>
+                            <h1
+                                style="margin: 10px 0 0 0; font-size: 24px; font-weight: 900; color: #323232; text-transform: uppercase;">
+                                RESET PASSWORD
+                            </h1>
+                            <p style="margin: 5px 0 0 0; font-size: 14px; font-weight: 700; color: #666666;">
+                                Verifikasi Keamanan Akun Kamu
+                            </p>
 
-<p style="margin:0;font-size:16px;opacity:.95;">
-Password Reset Verification
-</p>
+                        </td>
+                    </tr>
 
-</td>
-</tr>
+                    <!-- CONTENT BODY -->
+                    <tr>
+                        <td style="padding: 35px 30px;">
 
-<!-- CONTENT -->
-<tr>
-<td style="padding:45px;">
+                            <p style="font-size: 15px; font-weight: 700; color: #323232; margin: 0 0 10px 0;">
+                                Halo 👋
+                            </p>
 
-<span style="
-display:inline-block;
-background:#e0ecff;
-color:#2563eb;
-padding:8px 18px;
-border-radius:30px;
-font-size:13px;
-font-weight:600;">
-SECURITY VERIFICATION
-</span>
+                            <p
+                                style="font-size: 14px; font-weight: 600; color: #555555; line-height: 1.6; margin: 0 0 25px 0;">
+                                Kami menerima permintaan untuk mereset password akun kamu. Gunakan kode OTP di bawah ini
+                                untuk melanjutkan proses reset password.
+                            </p>
 
-<h2 style="
-margin:25px 0 10px;
-font-size:28px;
-color:#111827;">
-Halo 👋
-</h2>
+                            <!-- OTP BOX NEO-BRUTALIST -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 25px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <div
+                                            style="background-color: #ffffff; border: 3px solid #323232; border-radius: 8px; box-shadow: 6px 6px 0px #323232; padding: 20px; text-align: center;">
 
-<p style="
-font-size:16px;
-line-height:1.8;
-color:#4b5563;
-margin:0 0 18px;">
-Kami menerima permintaan untuk mereset password akun <b>Intern Boscod</b>.
-</p>
+                                            <div
+                                                style="font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #666666; margin-bottom: 10px;">
+                                                KODE OTP KAMU
+                                            </div>
 
-<p style="
-font-size:16px;
-line-height:1.8;
-color:#4b5563;
-margin:0;">
-Silakan gunakan kode OTP berikut untuk melanjutkan proses reset password.
-Jangan bagikan kode ini kepada siapa pun.
-</p>
+                                            <div
+                                                style="font-size: 38px; font-weight: 900; letter-spacing: 10px; color: #2d8cf0; font-family: 'Courier New', Courier, monospace;">
+                                                {{ $otp }}
+                                            </div>
 
-<!-- OTP BOX -->
-<table width="100%" cellpadding="0" cellspacing="0" style="margin:40px 0;">
-<tr>
-<td align="center">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
 
-<div style="
-display:inline-block;
-background:#f8fbff;
-border:2px solid #dbeafe;
-border-radius:18px;
-padding:24px 50px;">
+                            <!-- WARNING BADGES -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 25px;">
+                                <!-- EXPIRE INFO -->
+                                <tr>
+                                    <td
+                                        style="background-color: #fef08a; border: 2px solid #323232; border-radius: 6px; box-shadow: 3px 3px 0px #323232; padding: 12px 15px; font-size: 13px; font-weight: 700; color: #323232;">
+                                        ⏰ Kode OTP ini berlaku selama <b>5 menit</b>. Jangan berikan kode ini kepada
+                                        siapapun!
+                                    </td>
+                                </tr>
 
-<div style="
-font-size:13px;
-font-weight:600;
-letter-spacing:2px;
-color:#6b7280;
-margin-bottom:15px;">
-KODE OTP
-</div>
+                                <tr>
+                                    <td height="12"></td>
+                                </tr>
 
-<div style="
-font-size:44px;
-font-weight:800;
-letter-spacing:12px;
-color:#2563eb;">
-{{ $otp }}
-</div>
+                                <!-- SECURITY WARNING -->
+                                <tr>
+                                    <td
+                                        style="background-color: #fca5a5; border: 2px solid #323232; border-radius: 6px; box-shadow: 3px 3px 0px #323232; padding: 12px 15px; font-size: 13px; font-weight: 700; color: #323232;">
+                                        🛡️ Jika kamu tidak merasa meminta reset password, abaikan email ini. Akunmu
+                                        tetap aman.
+                                    </td>
+                                </tr>
+                            </table>
 
-</div>
+                        </td>
+                    </tr>
 
-</td>
-</tr>
-</table>
+                    <!-- FOOTER -->
+                    <tr>
+                        <td
+                            style="background-color: #ffffff; border-top: 3px solid #323232; padding: 20px; text-align: center;">
+                            <p
+                                style="margin: 0; font-size: 12px; font-weight: 800; color: #323232; text-transform: uppercase; letter-spacing: 1px;">
+                                © {{ date('Y') }} FlowDoc System
+                            </p>
+                            <p style="margin: 5px 0 0 0; font-size: 11px; font-weight: 600; color: #888888;">
+                                Email otomatis, tidak perlu dibalas.
+                            </p>
+                        </td>
+                    </tr>
 
-<!-- INFO -->
-<table width="100%" cellpadding="0" cellspacing="0">
+                </table>
 
-<tr>
-<td style="
-background:#fff8eb;
-border-left:5px solid #f59e0b;
-padding:18px 20px;
-border-radius:8px;">
-
-<div style="font-size:15px;color:#92400e;">
-⏰ <b>Kode OTP hanya berlaku selama 5 menit.</b>
-<br><br>
-Apabila masa berlaku habis, silakan lakukan permintaan OTP baru.
-</div>
-
-</td>
-</tr>
-
-<tr><td height="18"></td></tr>
-
-<tr>
-<td style="
-background:#fff1f2;
-border-left:5px solid #ef4444;
-padding:18px 20px;
-border-radius:8px;">
-
-<div style="
-font-size:15px;
-color:#991b1b;
-line-height:1.7;">
-
-🛡️ <b>Keamanan Akun</b>
-
-<ul style="
-margin:12px 0 0 20px;
-padding:0;">
-
-<li>Jangan pernah membagikan OTP kepada siapa pun.</li>
-
-<li>Tim Intern Boscod tidak akan pernah meminta OTP Anda.</li>
-
-<li>Jika Anda tidak merasa melakukan permintaan reset password, abaikan email ini.</li>
-
-</ul>
-
-</div>
-
-</td>
-</tr>
-
-</table>
-
-<hr style="
-margin:40px 0;
-border:none;
-border-top:1px solid #e5e7eb;">
-
-<p style="
-margin:0;
-font-size:15px;
-line-height:1.8;
-color:#6b7280;">
-
-Apabila Anda mengalami kendala dalam proses reset password,
-silakan hubungi administrator sistem.
-
-</p>
-
-</td>
-</tr>
-
-<!-- FOOTER -->
-<tr>
-<td style="
-background:#f8fafc;
-padding:30px;
-text-align:center;">
-
-<div style="
-font-size:18px;
-font-weight:700;
-color:#2563eb;">
-Intern Boscod
-</div>
-
-<div style="
-margin-top:10px;
-font-size:13px;
-line-height:1.8;
-color:#6b7280;">
-
-Email ini dikirim secara otomatis oleh sistem.
-Mohon untuk tidak membalas email ini.
-
-<br><br>
-
-© {{ date('Y') }} Intern Boscod.
-All Rights Reserved.
-
-</div>
-
-</td>
-</tr>
-
-</table>
-
-</td>
-</tr>
-</table>
+            </td>
+        </tr>
+    </table>
 
 </body>
+
 </html>
